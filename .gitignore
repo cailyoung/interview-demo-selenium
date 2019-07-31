@@ -375,6 +375,6 @@ MigrationBackup/
 .history
 
 # secrets file
-selenium-tests/credential.yaml
+credential.yaml
 # End of https://www.gitignore.io/api/csharp,dotnetcore,visualstudiocode
 
