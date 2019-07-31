@@ -4,6 +4,7 @@
 
 * .NET Core SDK for your platform
 * A working Xero credential
+* Chrome browser installed in the default location
 
 ## Running the tests
 
