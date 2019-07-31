@@ -15,10 +15,13 @@ namespace InterviewDemo
         [SetUp]
         public void SetUp()
         {
-            //new DriverManager().SetUpDriver(new ChromeConfig());
-            //_webDriver = new ChromeDriver();
-            if (UserActions.LogInToXero(_webDriver) == true) {
-                // do nothing
+            new DriverManager().SetUpDriver(new ChromeConfig());
+            _webDriver = new ChromeDriver();
+            try {
+                UserActions.LogInToXero(_webDriver);
+            }
+            catch {
+                // kill the test execution
             }
         }
 
@@ -31,7 +34,8 @@ namespace InterviewDemo
         [Test]
         public void OpenGoogleAndCheckTitle()
         {
-            _webDriver.Navigate().GoToUrl("https://go.xero.com/Dashboard/");
+            _webDriver.Navigate().GoToUrl("https://my.xero.com/!xkcD/Action/OrganisationLogin/!Q81RZ");
+            Assert.True(_webDriver.FindElement(By.ClassName("xrh-appbutton--text")).ToString().Contains("Demo"));
             Assert.True(_webDriver.Title.Contains("Google"));
         }
     }

@@ -22,15 +22,17 @@ namespace InterviewDemo
         
         public static bool LogInToXero(IWebDriver _webdriver)
         {
-            YamlReader.getCredentialFromFile();
+            Credential xeroCred = YamlReader.getCredentialFromFile();
             _webdriver.Navigate().GoToUrl("https://login.xero.com/");
-            _webdriver.FindElement(By.CssSelector("#email")).SendKeys("test");
+            _webdriver.FindElement(By.CssSelector("#email")).SendKeys(xeroCred.Username);
+            _webdriver.FindElement(By.CssSelector("#password")).SendKeys(xeroCred.Password);
+            _webdriver.FindElement(By.CssSelector("#submitButton")).Click();
+            //break here for 2FA
             return true;
         }
     }
     class YamlReader
     {
-        FileInfo file = new FileInfo("helpers.cs");
         private const string filepath = @"/Users/cailyoung/repos/interview-demo-selenium/selenium-tests/credential.yaml";
         public static Credential getCredentialFromFile(){
             var input = new StreamReader(filepath);
