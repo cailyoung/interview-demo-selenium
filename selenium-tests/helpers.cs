@@ -26,7 +26,7 @@ namespace InterviewDemo
             _webdriver.Navigate().GoToUrl("https://login.xero.com/");
             _webdriver.FindElement(By.CssSelector("#email")).SendKeys(xeroCred.Username);
             _webdriver.FindElement(By.CssSelector("#password")).SendKeys(xeroCred.Password);
-            _webdriver.FindElement(By.CssSelector("#submitButton")).Click();
+            _webdriver.FindElement(By.CssSelector("#password")).Submit();
             //break here for 2FA
             return true;
         }
