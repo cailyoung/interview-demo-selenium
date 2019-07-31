@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
+using InterviewDemo;
 
 namespace InterviewDemo
 {
@@ -14,8 +15,11 @@ namespace InterviewDemo
         [SetUp]
         public void SetUp()
         {
-            new DriverManager().SetUpDriver(new ChromeConfig());
-            _webDriver = new ChromeDriver();
+            //new DriverManager().SetUpDriver(new ChromeConfig());
+            //_webDriver = new ChromeDriver();
+            if (UserActions.LogInToXero(_webDriver) == true) {
+                // do nothing
+            }
         }
 
         [TearDown]
@@ -27,7 +31,7 @@ namespace InterviewDemo
         [Test]
         public void OpenGoogleAndCheckTitle()
         {
-            _webDriver.Navigate().GoToUrl("https://www.xero.com");
+            _webDriver.Navigate().GoToUrl("https://go.xero.com/Dashboard/");
             Assert.True(_webDriver.Title.Contains("Google"));
         }
     }
