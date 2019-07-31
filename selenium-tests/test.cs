@@ -35,7 +35,8 @@ namespace InterviewDemo
         public void OpenGoogleAndCheckTitle()
         {
             _webDriver.Navigate().GoToUrl("https://my.xero.com/!xkcD/Action/OrganisationLogin/!Q81RZ");
-            Assert.True(_webDriver.FindElement(By.ClassName("xrh-appbutton--text")).ToString().Contains("Demo"));
+            string companyName = _webDriver.FindElement(By.ClassName("xui-pageheading--title")).GetProperty("innerText");
+            Assert.True(companyName.Contains("Demo"));
             Assert.True(_webDriver.Title.Contains("Google"));
         }
     }
