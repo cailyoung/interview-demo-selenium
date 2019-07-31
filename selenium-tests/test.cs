@@ -1,9 +1,12 @@
 using NUnit.Framework;
+using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
-using InterviewDemo;
+
+using System;
 
 namespace InterviewDemo
 {
@@ -21,7 +24,7 @@ namespace InterviewDemo
                 UserActions.LogInToXero(_webDriver);
             }
             catch {
-                // kill the test execution
+                throw new System.Exception("Browser wasn't available to log in");
             }
         }
 
@@ -32,12 +35,16 @@ namespace InterviewDemo
         }
 
         [Test]
-        public void OpenGoogleAndCheckTitle()
+        public void AddABankAccount()
         {
-            _webDriver.Navigate().GoToUrl("https://my.xero.com/!xkcD/Action/OrganisationLogin/!Q81RZ");
-            string companyName = _webDriver.FindElement(By.ClassName("xui-pageheading--title")).GetProperty("innerText");
-            Assert.True(companyName.Contains("Demo"));
-            Assert.True(_webDriver.Title.Contains("Google"));
+            _webDriver.Navigate().GoToUrl("https://go.xero.com/Banking/Account/#find");
+            var wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 30));
+            IWebElement element = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("input[data-ref='inputEl']")));
+            _webDriver.FindElement(By.CssSelector("input[data-ref='inputEl']")).SendKeys("ANZ (NZ)");
+            IWebElement element2 = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("ba-allbanks-filter-prompt")));
+            // yep
+            _webDriver.FindElement(By.ClassName("ba-allbanks-filter-prompt")).Click();
+            Assert.True(true);
         }
     }
 }
