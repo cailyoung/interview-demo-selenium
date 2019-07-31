@@ -378,3 +378,4 @@ MigrationBackup/
 credential.yaml
 # End of https://www.gitignore.io/api/csharp,dotnetcore,visualstudiocode
 
+selenium-tests/credential.yaml
