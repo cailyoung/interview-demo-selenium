@@ -4,10 +4,10 @@ using OpenQA.Selenium.Chrome;
 using WebDriverManager;
 using WebDriverManager.DriverConfigs.Impl;
 
-namespace Test
+namespace InterviewDemo
 {
     [TestFixture]
-    public class Tests
+    public class SeleniumAcceptanceTests
     {
         private IWebDriver _webDriver;
 
@@ -25,9 +25,9 @@ namespace Test
         }
 
         [Test]
-        public void Test()
+        public void OpenGoogleAndCheckTitle()
         {
-            _webDriver.Navigate().GoToUrl("https://www.google.com");
+            _webDriver.Navigate().GoToUrl("https://www.xero.com");
             Assert.True(_webDriver.Title.Contains("Google"));
         }
     }
