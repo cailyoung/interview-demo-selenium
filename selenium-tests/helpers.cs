@@ -1,33 +1,35 @@
 using OpenQA.Selenium;
-using YamlDotNet.RepresentationModel;
+using OpenQA.Selenium.Support.UI;
 using YamlDotNet.Serialization;
 using System.IO;
-using System;
 using System.Collections.Generic;
+using System;
+using System.Threading;
 
 namespace InterviewDemo
 
 {
-    public class Credential
-    {
-        public string Username;
-        public string Password;
-        public Credential(string username, string password){
-                Username = username;
-                Password = password;
-            }
-    }
     public class UserActions
     {
         
-        public static bool LogInToXero(IWebDriver _webdriver)
+        public static bool LogInToXero(IWebDriver _webDriver)
         {
             Credential xeroCred = YamlReader.getCredentialFromFile();
-            _webdriver.Navigate().GoToUrl("https://login.xero.com/");
-            _webdriver.FindElement(By.CssSelector("#email")).SendKeys(xeroCred.Username);
-            _webdriver.FindElement(By.CssSelector("#password")).SendKeys(xeroCred.Password);
-            _webdriver.FindElement(By.CssSelector("#password")).Submit();
-            //break here for 2FA
+            var wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 30));
+            _webDriver.Navigate().GoToUrl("https://login.xero.com/");
+            _webDriver.FindElement(By.CssSelector("#email")).SendKeys(xeroCred.Username);
+            _webDriver.FindElement(By.CssSelector("#password")).SendKeys(xeroCred.Password);
+            _webDriver.FindElement(By.CssSelector("#password")).Submit();
+            
+            //wait here for 2FA
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("input[data-automationid='auth-onetimepassword--input']")));
+            Thread.Sleep(10000);
+            
+            //once a human has proved their existence
+            _webDriver.FindElement(By.CssSelector("button[data-automationid='auth-submitcodebutton']")).Click();
+            
+            // wait for the redirect to complete
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("div[data-automationid='gettingStartedPanel-description']")));
             return true;
         }
     }
