@@ -13,5 +13,5 @@
 
 ## TODO
 
-- [ ] Parameterise the credential file location
-- [ ] Reporting
+* [ ] Parameterise the credential file location
+* [ ] Reporting
