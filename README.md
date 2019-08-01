@@ -4,6 +4,7 @@
 
 * .NET Core SDK for your platform
 * A working Xero credential with 2FA code already set up
+** Clear out your demo company before running the test
 * Chrome browser (latest version) installed in the default location
 
 ## Running the tests
