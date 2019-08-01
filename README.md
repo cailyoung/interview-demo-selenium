@@ -4,7 +4,7 @@
 
 * .NET Core SDK for your platform
 * A working Xero credential with 2FA code already set up
-** Clear out your demo company before running the test
+  * Clear out your demo company before running the test, please.
 * Chrome browser (latest version) installed in the default location
 
 ## Running the tests
@@ -15,6 +15,7 @@
 1. Run `dotnet test` from inside the `selenium-tests` folder.
 1. When the browser pauses at the 2FA entry, enter you code but don't click. Selenium should handle the click after 10 seconds.
 1. Results visible in the console.
+1. The test suite will attempt to reset your demo company in teardown.
 
 ## TODO
 
