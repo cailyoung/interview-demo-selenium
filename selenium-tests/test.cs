@@ -54,10 +54,13 @@ namespace InterviewDemo
         {
             _webDriver.Navigate().GoToUrl("https://go.xero.com/Banking/Account/#find");
             var wait = new WebDriverWait(_webDriver, new TimeSpan(0, 0, 30));
+            
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("input[data-ref='inputEl']")));
             _webDriver.FindElement(By.CssSelector("input[data-ref='inputEl']")).SendKeys("ANZ (NZ)");
+            
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.ClassName("ba-allbanks-filter-prompt")));
             _webDriver.FindElement(By.ClassName("ba-allbanks-filter-prompt")).Click();
+            
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.CssSelector("#ba-banklist-1023 ul li")));
             var bankAccountElements = _webDriver.FindElements(By.CssSelector("#ba-banklist-1023 ul li"));
             var accountNames = new List<string>();
@@ -71,8 +74,10 @@ namespace InterviewDemo
             }
             Assert.Contains("ANZ (NZ)",accountNames);
             targetAccountElement.Click();
+            
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TitleContains("account details"));
             _webDriver.FindElement(By.CssSelector("input[id^='accountname']")).SendKeys("Test Account Name");
+            
             _webDriver.FindElement(By.CssSelector("input[id^='accounttype']")).Click();
 
             var bankAccountTypesElements = _webDriver.FindElements(By.CssSelector("li.ba-combo-list-item"));
@@ -101,13 +106,13 @@ namespace InterviewDemo
             //Is the account name in the success message?
             StringAssert.Contains("Test",successMessage);
             
-            List<String> bankAccountNames = null;
-            var bankAccountNameElements = _webDriver.FindElements(By.CssSelector("div.bank-header"));
+            var bankAccountNames = new List<String>();
+            var bankAccountNameElements = _webDriver.FindElements(By.CssSelector("div.bank-header a.bank-name"));
             foreach (IWebElement bankAccountNameElement in bankAccountNameElements) {
                 string bankAccountName = bankAccountNameElement.GetProperty("innerText");
                 bankAccountNames.Add(bankAccountName);
             }
-            Assert.Contains("Test Account Name",bankAccountNames);
+            Assert.That(bankAccountNames, Has.Some.Contains("Test Account Name"));
         }
     }
 }
