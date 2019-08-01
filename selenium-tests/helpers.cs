@@ -26,11 +26,15 @@ namespace InterviewDemo
             Thread.Sleep(10000);
             
             //once a human has proved their existence
+            try {
             _webDriver.FindElement(By.CssSelector("button[data-automationid='auth-submitcodebutton']")).Click();
-            
+            }
             // wait for the redirect to complete
+            finally {
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("div[data-automationid='gettingStartedPanel-description']")));
+            }
             return true;
+            
         }
     }
     class YamlReader
